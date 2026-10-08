@@ -31,3 +31,6 @@ ehthumbs.db
 .env.local
 .env.*.local
 *.log
+
+# Workflows (local-only unless workflow scope granted)
+.github/workflows/
