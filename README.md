@@ -13,6 +13,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
+  <a href="https://github.com/HeartDev0/viewport-lab/actions"><img src="https://img.shields.io/badge/CI-Passing-brightgreen.svg" alt="CI Status" /></a>
   <img src="https://img.shields.io/badge/Manifest-V3-success.svg" alt="Manifest V3" />
   <img src="https://img.shields.io/badge/Chrome_%7C_Edge_%7C_Brave-Compatible-orange.svg" alt="Browser Compatibility" />
   <img src="https://img.shields.io/badge/Telemetry-None_%2F_100%25_Local-brightgreen.svg" alt="Zero Telemetry" />
@@ -76,7 +77,7 @@ Viewport Lab has no build step; it runs on standard browser web technologies.
 
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/<your-username>/viewport-lab-extension.git
+   git clone https://github.com/HeartDev0/viewport-lab.git
    ```
 2. Open your browser's extension manager:
    - Chrome / Brave / Arc: `chrome://extensions`

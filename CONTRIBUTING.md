@@ -23,8 +23,8 @@ Before opening a pull request or proposing changes, ensure your contribution res
 
 1. Clone your fork locally:
    ```bash
-   git clone https://github.com/<your-username>/viewport-lab-extension.git
-   cd viewport-lab-extension
+   git clone https://github.com/HeartDev0/viewport-lab.git
+   cd viewport-lab
    ```
 
 2. Load unpacked in Chrome or Edge via `chrome://extensions` (Developer mode enabled).
