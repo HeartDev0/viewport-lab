@@ -3,57 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1080, height=1080, initial-scale=1.0">
-  <title>Viewport Lab — Social Promo Backdrop 1:1</title>
+  <title>Viewport Lab — Developer Showcase 1:1</title>
   <style>
     :root {
-      --bg: #07090e;
-      --card-bg: rgba(18, 24, 38, 0.85);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg: #090c10;
+      --panel: #0d1117;
+      --card-bg: rgba(16, 22, 34, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(94, 224, 214, 0.25);
       --coral: #ff6b86;
       --cyan: #5ee0d6;
-      --indigo: #6366f1;
-      --yellow: #ffc107;
-      --text: #f8fafc;
-      --muted: #94a3b8;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --text-subtle: #484f58;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html, body {
       width: 1080px;
       height: 1080px;
       overflow: hidden;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
       position: relative;
     }
 
-    .glow-top {
-      position: absolute;
-      top: -150px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(94, 224, 214, 0.1) 50%, transparent 70%);
-      pointer-events: none;
-    }
-    .glow-bottom {
-      position: absolute;
-      bottom: -120px;
-      right: -80px;
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 107, 134, 0.2) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .bg-grid {
+    .bg-dots {
       position: absolute;
       inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 36px 36px;
+      background-image: radial-gradient(#1f2633 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.65;
       pointer-events: none;
+    }
+
+    .top-edge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #5ee0d6 30%, #ff6b86 70%, transparent);
     }
 
     .container {
@@ -63,176 +54,298 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 40px 30px 40px;
+      padding: 34px 30px 28px;
       z-index: 10;
     }
 
-    /* TOP SECTION (y: 40px to 210px) */
-    .top-section {
+    /* TOP HEADER */
+    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 10px;
+      margin-bottom: 8px;
     }
-    .brand {
+
+    .brand-wrap {
       display: flex;
       align-items: center;
       gap: 14px;
     }
-    .brand-icon {
+
+    .app-icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--coral), var(--indigo));
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      box-shadow: 0 6px 18px rgba(255, 107, 134, 0.35);
-    }
-    .brand-name {
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .brand-sub {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--cyan);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
 
-    .center-hook {
-      text-align: right;
-    }
-    .hook-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      background: rgba(255, 107, 134, 0.15);
-      border: 1px solid rgba(255, 107, 134, 0.4);
-      border-radius: 20px;
-      color: var(--coral);
-      font-size: 13px;
+    .brand-titles h1 {
+      font-size: 24px;
       font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-titles span {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--cyan);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-    .hook-desc {
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 500;
     }
 
-    /* CENTER VIDEO SLOT (y: 220px to 802px, height: 582px) */
-    .video-frame-slot {
-      width: 1020px;
-      height: 582px;
-      margin: 0 auto;
-      border-radius: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 
-        0 20px 50px -10px rgba(0, 0, 0, 0.9),
-        0 0 30px rgba(99, 102, 241, 0.2);
-      background: #000;
+    .top-hook {
+      text-align: right;
     }
 
-    /* BOTTOM SECTION (y: 830px to 1040px) */
-    .bottom-section {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 0 10px;
-    }
-    .features-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .feature-pill {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
+    .top-hook strong {
+      display: block;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
+      letter-spacing: -0.01em;
     }
-    .feature-pill span { color: var(--muted); font-size: 11px; font-weight: 400; margin-left: auto; }
 
-    .cta-card {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(255, 107, 134, 0.16));
-      border: 1.2px solid rgba(99, 102, 241, 0.4);
-      border-radius: 16px;
-      padding: 16px 28px;
+    .top-hook span {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    /* CENTER WINDOW FRAME */
+    .window-frame {
+      position: absolute;
+      left: 30px;
+      top: 162px;
+      width: 1020px;
+      height: 630px;
+      background: #0f1319;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 24px 60px -15px rgba(0, 0, 0, 0.8),
+        0 0 1px 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .window-titlebar {
+      height: 48px;
+      background: #141922;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 16px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .window-urlbar {
+      flex: 1;
+      height: 28px;
+      background: #090c10;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: #8b949e;
+      gap: 8px;
+    }
+
+    .window-urlbar .lock-icon {
+      color: var(--cyan);
+      font-size: 11px;
+    }
+
+    .window-urlbar .url-target {
+      color: #e6edf3;
+    }
+
+    .video-viewport-slot {
+      width: 1020px;
+      height: 582px;
+      background: #000;
+      position: relative;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .features-pills {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pill-item {
+      flex: 1;
+      background: #0e121a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .pill-item strong {
+      color: #fff;
+    }
+
+    .footer-action {
+      background: #111622;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .cta-title { font-size: 20px; font-weight: 900; color: #fff; }
-    .cta-url { font-size: 13px; color: var(--cyan); font-weight: 600; font-family: monospace; }
-    .cta-btn {
-      background: linear-gradient(135deg, var(--coral), #ff4d6d);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 800;
-      padding: 12px 24px;
-      border-radius: 12px;
-      display: inline-flex;
+
+    .repo-link {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 18px rgba(255, 107, 134, 0.4);
+      gap: 12px;
+    }
+
+    .github-svg {
+      width: 26px;
+      height: 26px;
+      fill: #fff;
+    }
+
+    .repo-text strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .repo-text span {
+      font-size: 12px;
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .cta-tags {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge-open {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #3fb950;
+      background: rgba(46, 160, 67, 0.15);
+      border: 1px solid rgba(46, 160, 67, 0.35);
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+
+    .badge-kofi {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--coral);
+      background: rgba(255, 107, 134, 0.12);
+      border: 1px solid rgba(255, 107, 134, 0.3);
+      padding: 6px 14px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <div class="glow-top"></div>
-  <div class="glow-bottom"></div>
-  <div class="bg-grid"></div>
+  <div class="top-edge"></div>
+  <div class="bg-dots"></div>
 
   <div class="container">
-    <div class="top-section">
-      <div class="brand">
-        <div class="brand-icon">⚡</div>
-        <div>
-          <div class="brand-name">Viewport Lab</div>
-          <div class="brand-sub">Multi-Device Responsive Review & QA</div>
+    <!-- Top Header -->
+    <div class="top-bar">
+      <div class="brand-wrap">
+        <img src="../assets/app-icon.png" class="app-icon" alt="Viewport Lab Icon" />
+        <div class="brand-titles">
+          <h1>Viewport Lab</h1>
+          <span>By HeartDev • 100% Local</span>
         </div>
       </div>
-      <div class="center-hook">
-        <div class="hook-badge">✨ Free Chrome & Edge Extension</div>
-        <div class="hook-desc">60fps Sync Scroll · Zero-Reload Rotation · Deterministic QA</div>
+      <div class="top-hook">
+        <strong>Tired of DevTools for responsive design?</strong>
+        <span>Zero telemetry • Zero weird permissions</span>
       </div>
     </div>
 
-    <div class="video-frame-slot"></div>
+    <!-- Center Window Frame (Slot for 1020x582 video at y=134) -->
+    <div class="window-frame">
+      <div class="window-titlebar">
+        <div class="window-dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <div class="window-urlbar">
+          <span class="lock-icon">🔒</span>
+          <span>preview: </span>
+          <span class="url-target">http://localhost:5173</span>
+          <span style="margin-left: auto; color: #484f58;">Viewport Lab v0.3.3</span>
+        </div>
+      </div>
+      <div class="video-viewport-slot"></div>
+    </div>
 
-    <div class="bottom-section">
-      <div class="features-row">
-        <div class="feature-pill">⚡ 60fps Sync Scroll <span>Lockstep</span></div>
-        <div class="feature-pill">🔄 Zero-Reload Rotation <span>Hot swap</span></div>
-        <div class="feature-pill">🎯 Deterministic QA <span>Touch & Alt</span></div>
-        <div class="feature-pill">🔒 100% Local <span>Zero trackers</span></div>
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+      <div class="features-pills">
+        <div class="pill-item">📱 <strong>Side-by-Side</strong> Devices</div>
+        <div class="pill-item">🔄 <strong>60fps Sync</strong> Scroll</div>
+        <div class="pill-item">⚡ <strong>Zero-Reload</strong> Rotation</div>
+        <div class="pill-item">🛡️ <strong>Deterministic</strong> QA</div>
       </div>
 
-      <div class="cta-card">
-        <div>
-          <div class="cta-title">Free & Open Source on GitHub</div>
-          <div class="cta-url">github.com/heartdev/viewport-lab</div>
+      <div class="footer-action">
+        <div class="repo-link">
+          <svg class="github-svg" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <div class="repo-text">
+            <strong>HeartDev0 / viewport-lab</strong>
+            <span>github.com/HeartDev0/viewport-lab</span>
+          </div>
         </div>
-        <div class="cta-btn">
-          ⭐ Star on GitHub
+        <div class="cta-tags">
+          <div class="badge-open">Free & Open Source</div>
+          <div class="badge-kofi">ko-fi.com/heartdevowo</div>
         </div>
       </div>
     </div>

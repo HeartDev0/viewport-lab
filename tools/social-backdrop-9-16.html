@@ -3,316 +3,468 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1080, height=1920, initial-scale=1.0">
-  <title>Viewport Lab — Social Promo Backdrop 9:16</title>
+  <title>Viewport Lab — Developer Showcase</title>
   <style>
     :root {
-      --bg: #07090e;
-      --card-bg: rgba(18, 24, 38, 0.85);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg: #090c10;
+      --panel: #0d1117;
+      --card-bg: rgba(16, 22, 34, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(94, 224, 214, 0.25);
       --coral: #ff6b86;
       --cyan: #5ee0d6;
-      --indigo: #6366f1;
-      --yellow: #ffc107;
-      --text: #f8fafc;
-      --muted: #94a3b8;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --text-subtle: #484f58;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html, body {
       width: 1080px;
       height: 1920px;
       overflow: hidden;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
       position: relative;
     }
 
-    /* Ambient Glows */
-    .glow-top {
-      position: absolute;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(94, 224, 214, 0.12) 40%, transparent 70%);
-      pointer-events: none;
-    }
-    .glow-bottom {
-      position: absolute;
-      bottom: -150px;
-      right: -100px;
-      width: 900px;
-      height: 750px;
-      background: radial-gradient(circle, rgba(255, 107, 134, 0.22) 0%, rgba(99, 102, 241, 0.1) 40%, transparent 70%);
-      pointer-events: none;
-    }
-    .bg-grid {
+    /* Subtle dev dot matrix background */
+    .bg-dots {
       position: absolute;
       inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-image: radial-gradient(#1f2633 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.65;
       pointer-events: none;
     }
 
-    .container {
+    /* Subtle top edge accent line */
+    .top-edge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #5ee0d6 30%, #ff6b86 70%, transparent);
+    }
+
+    .canvas-container {
       position: relative;
       width: 1080px;
       height: 1920px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 65px 30px 55px;
+      padding: 72px 30px 60px;
       z-index: 10;
     }
 
-    /* TOP SECTION (y: 70px to 620px) */
+    /* TOP HEADER & TITLE */
     .top-section {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
     }
-    .header-bar {
-      width: 100%;
+
+    .nav-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 36px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
     }
-    .brand {
+
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    .brand-icon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, var(--coral), var(--indigo));
+
+    .app-icon {
+      width: 58px;
+      height: 58px;
       border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-text h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-text span {
+      font-size: 13px;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .meta-tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+
+    .meta-tag.highlight {
+      color: var(--cyan);
+      border-color: rgba(94, 224, 214, 0.3);
+      background: rgba(94, 224, 214, 0.06);
+    }
+
+    /* HERO HOOK */
+    .hero-box {
+      text-align: left;
+      padding: 0 10px;
+    }
+
+    .hook-kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--coral);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 8px 24px rgba(255, 107, 134, 0.35);
-    }
-    .brand-name {
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: left;
-    }
-    .brand-sub {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--cyan);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-align: left;
-    }
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
       gap: 8px;
-      padding: 10px 22px;
-      background: rgba(94, 224, 214, 0.12);
-      border: 1px solid rgba(94, 224, 214, 0.35);
-      border-radius: 30px;
-      color: var(--cyan);
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
     }
 
-    .hook-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      background: rgba(255, 107, 134, 0.15);
-      border: 1px solid rgba(255, 107, 134, 0.4);
-      border-radius: 40px;
-      color: var(--coral);
-      font-size: 18px;
+    .hook-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .hero-title {
+      font-size: 48px;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(255, 107, 134, 0.25);
-    }
-    .main-title {
-      font-size: 56px;
-      font-weight: 900;
-      line-height: 1.12;
+      line-height: 1.14;
       letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      max-width: 960px;
-      background: linear-gradient(180deg, #ffffff 40%, #a4b1c2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      font-size: 24px;
-      font-weight: 500;
-      color: var(--muted);
-      max-width: 860px;
-      line-height: 1.4;
+      color: #fff;
+      margin-bottom: 18px;
+      max-width: 980px;
     }
 
-    /* CENTER VIDEO PLACEHOLDER (y: 640px to 1260px) */
-    .video-frame-slot {
+    .hero-desc {
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--text-muted);
+      max-width: 900px;
+    }
+
+    /* CENTER VIDEO CONTAINER (Simulated Clean Browser / OS Window) */
+    .window-frame {
+      position: absolute;
+      left: 30px;
+      top: 627px;
       width: 1020px;
-      height: 600px;
-      margin: 0 auto;
-      border-radius: 28px;
-      border: 2px solid rgba(255, 255, 255, 0.12);
+      height: 630px;
+      background: #0f1319;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 
-        0 25px 60px -15px rgba(0, 0, 0, 0.9),
-        0 0 40px rgba(99, 102, 241, 0.2);
+        0 24px 60px -15px rgba(0, 0, 0, 0.8),
+        0 0 1px 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .window-titlebar {
+      height: 48px;
+      background: #141922;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 16px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .window-urlbar {
+      flex: 1;
+      height: 28px;
+      background: #090c10;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: #8b949e;
+      gap: 8px;
+    }
+
+    .window-urlbar .lock-icon {
+      color: var(--cyan);
+      font-size: 11px;
+    }
+
+    .window-urlbar .url-target {
+      color: #e6edf3;
+    }
+
+    .video-viewport-slot {
+      width: 1020px;
+      height: 582px;
       background: #000;
       position: relative;
     }
 
-    /* BOTTOM SECTION (y: 1280px to 1860px) */
+    /* BOTTOM SPECS & GITHUB CTA */
     .bottom-section {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 50px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 22px;
     }
 
-    .features-grid {
+    .specs-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
-    .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 22px 24px;
+
+    .spec-item {
+      background: #0e121a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
       display: flex;
-      align-items: center;
-      gap: 18px;
-      backdrop-filter: blur(14px);
+      align-items: flex-start;
+      gap: 14px;
     }
-    .feat-icon-box {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+
+    .spec-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      margin-top: 8px;
       flex-shrink: 0;
     }
-    .box-1 { background: rgba(94, 224, 214, 0.15); color: var(--cyan); border: 1px solid rgba(94, 224, 214, 0.3); }
-    .box-2 { background: rgba(255, 107, 134, 0.15); color: var(--coral); border: 1px solid rgba(255, 107, 134, 0.3); }
-    .box-3 { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
-    .box-4 { background: rgba(255, 193, 7, 0.15); color: var(--yellow); border: 1px solid rgba(255, 193, 7, 0.3); }
 
-    .feat-info strong { font-size: 18px; font-weight: 800; color: #fff; display: block; margin-bottom: 4px; }
-    .feat-info span { font-size: 14px; color: var(--muted); }
+    .spec-item:nth-child(2) .spec-bullet { background: var(--coral); }
+    .spec-item:nth-child(3) .spec-bullet { background: #6366f1; }
+    .spec-item:nth-child(4) .spec-bullet { background: #eab308; }
 
-    .cta-card {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(255, 107, 134, 0.18));
-      border: 1.5px solid rgba(99, 102, 241, 0.45);
-      border-radius: 26px;
-      padding: 28px 40px;
+    .spec-content strong {
+      display: block;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .spec-content span {
+      display: block;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .cta-bar {
+      background: #111622;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 22px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
     }
-    .cta-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 4px; }
-    .cta-url { font-size: 16px; color: var(--cyan); font-weight: 600; font-family: monospace; }
-    .cta-button {
-      background: linear-gradient(135deg, var(--coral), #ff4d6d);
-      color: #fff;
-      font-size: 20px;
+
+    .cta-repo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .github-svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff;
+    }
+
+    .repo-info strong {
+      display: block;
+      font-size: 18px;
       font-weight: 800;
-      padding: 18px 36px;
-      border-radius: 16px;
-      display: inline-flex;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .repo-info span {
+      font-size: 13px;
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .cta-actions {
+      display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 8px 25px rgba(255, 107, 134, 0.45);
+    }
+
+    .btn-github {
+      background: #238636;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn-kofi {
+      background: rgba(255, 107, 134, 0.15);
+      border: 1px solid rgba(255, 107, 134, 0.35);
+      color: var(--coral);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       white-space: nowrap;
     }
   </style>
 </head>
 <body>
-  <div class="glow-top"></div>
-  <div class="glow-bottom"></div>
-  <div class="bg-grid"></div>
+  <div class="top-edge"></div>
+  <div class="bg-dots"></div>
 
-  <div class="container">
-    <!-- Top Header & Hook -->
+  <div class="canvas-container">
+    <!-- Top Section -->
     <div class="top-section">
-      <div class="header-bar">
-        <div class="brand">
-          <div class="brand-icon">⚡</div>
-          <div>
-            <div class="brand-name">Viewport Lab</div>
-            <div class="brand-sub">Open Source Workspace</div>
+      <div class="nav-bar">
+        <div class="brand-group">
+          <img src="../assets/app-icon.png" class="app-icon" alt="Viewport Lab Icon" />
+          <div class="brand-text">
+            <h1>Viewport Lab</h1>
+            <span>Built by HeartDev</span>
           </div>
         </div>
-        <div class="badge-pill">🔥 Chrome & Edge Extension</div>
+        <div class="badges-row">
+          <div class="meta-tag highlight">100% Local</div>
+          <div class="meta-tag">Zero Telemetry</div>
+          <div class="meta-tag">MIT Open Source</div>
+        </div>
       </div>
 
-      <div class="hook-tag">✨ Stop Testing On One Screen</div>
-      <h1 class="main-title">Multi-Device Responsive Review & QA</h1>
-      <p class="subtitle">Test Apple, Android & Tablet breakpoints side-by-side with zero-reload geometry changes and 60fps sync scroll.</p>
+      <div class="hero-box">
+        <div class="hook-kicker">Developer Utility</div>
+        <h2 class="hero-title">Test responsive designs without DevTools headaches.</h2>
+        <p class="hero-desc">Every tool I found wanted telemetry and invasive permissions. So I built a clean, side-by-side review workspace for my own projects.</p>
+      </div>
     </div>
 
-    <!-- Center Slot for Video -->
-    <div class="video-frame-slot"></div>
+    <!-- Center Window Frame (Slot for 1020x582 video at y=675) -->
+    <div class="window-frame">
+      <div class="window-titlebar">
+        <div class="window-dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <div class="window-urlbar">
+          <span class="lock-icon">🔒</span>
+          <span>preview: </span>
+          <span class="url-target">http://localhost:5173</span>
+          <span style="margin-left: auto; color: #484f58;">Viewport Lab v0.3.3</span>
+        </div>
+      </div>
+      <div class="video-viewport-slot"></div>
+    </div>
 
-    <!-- Bottom Features & Call to Action -->
+    <!-- Bottom Features & Clean Links -->
     <div class="bottom-section">
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feat-icon-box box-1">⚡</div>
-          <div class="feat-info">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-bullet"></div>
+          <div class="spec-content">
+            <strong>Side-by-Side Fleet</strong>
+            <span>iPhone, Android, iPad & Desktop viewports in real time</span>
+          </div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-bullet"></div>
+          <div class="spec-content">
             <strong>60fps Sync Scroll</strong>
-            <span>Relative lockstep navigation</span>
+            <span>Relative lockstep scroll without losing JavaScript state</span>
           </div>
         </div>
-        <div class="feature-card">
-          <div class="feat-icon-box box-2">🔄</div>
-          <div class="feat-info">
+        <div class="spec-item">
+          <div class="spec-bullet"></div>
+          <div class="spec-content">
             <strong>Zero-Reload Rotation</strong>
-            <span>Keep JavaScript state alive</span>
+            <span>Hot resize and portrait/landscape without unmounting iframes</span>
           </div>
         </div>
-        <div class="feature-card">
-          <div class="feat-icon-box box-3">🎯</div>
-          <div class="feat-info">
+        <div class="spec-item">
+          <div class="spec-bullet"></div>
+          <div class="spec-content">
             <strong>Deterministic QA</strong>
-            <span>Touch targets & overflows</span>
-          </div>
-        </div>
-        <div class="feature-card">
-          <div class="feat-icon-box box-4">🔒</div>
-          <div class="feat-info">
-            <strong>100% Local & Free</strong>
-            <span>Zero telemetry or trackers</span>
+            <span>Instant detection of touch targets & horizontal overflow</span>
           </div>
         </div>
       </div>
 
-      <div class="cta-card">
-        <div>
-          <div class="cta-title">Get Viewport Lab Free</div>
-          <div class="cta-url">github.com/heartdev/viewport-lab</div>
+      <div class="cta-bar">
+        <div class="cta-repo">
+          <svg class="github-svg" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <div class="repo-info">
+            <strong>HeartDev0 / viewport-lab</strong>
+            <span>github.com/HeartDev0/viewport-lab</span>
+          </div>
         </div>
-        <div class="cta-button">
-          ⭐ Star on GitHub
+        <div class="cta-actions">
+          <div class="btn-github">⭐ Star on GitHub</div>
+          <div class="btn-kofi">☕ Ko-fi</div>
         </div>
       </div>
     </div>
