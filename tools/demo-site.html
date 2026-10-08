@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseFlow — Real-Time Telemetry Platform</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 28, 45, 0.7);
+      --accent: #6366f1;
+      --accent-glow: #818cf8;
+      --text: #f3f4f6;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --coral: #ff6b86;
+      --cyan: #5ee0d6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.5; padding-bottom: 80px; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px; color: #fff; text-decoration: none; }
+    .logo-icon { width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--cyan)); display: inline-flex; align-items: center; justify-content: center; font-size: 14px; }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: #fff; }
+    .btn-header { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .mobile-menu { display: none; background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
+
+    .hero {
+      padding: 48px 24px 36px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 20px;
+      color: var(--accent-glow);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .actions { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; }
+    .btn-primary { background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; padding: 12px 24px; border-radius: 8px; border: none; font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid var(--border); padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .stat-val { font-size: 24px; font-weight: 800; color: #fff; }
+    .stat-lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+
+    .features {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .icon-1 { background: rgba(94, 224, 214, 0.15); color: var(--cyan); border: 1px solid rgba(94, 224, 214, 0.3); }
+    .icon-2 { background: rgba(255, 107, 134, 0.15); color: var(--coral); border: 1px solid rgba(255, 107, 134, 0.3); }
+    .icon-3 { background: rgba(99, 102, 241, 0.15); color: var(--accent-glow); border: 1px solid rgba(99, 102, 241, 0.3); }
+    .feat-card h3 { font-size: 16px; font-weight: 700; color: #fff; }
+    .feat-card p { font-size: 13px; color: var(--muted); }
+
+    .showcase-strip {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(94, 224, 214, 0.08));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .showcase-text h4 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .showcase-text p { font-size: 13px; color: var(--muted); }
+    .badge-tag { background: #6366f1; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .mobile-menu { display: block; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features { grid-template-columns: 1fr; }
+      .showcase-strip { flex-direction: column; text-align: center; gap: 16px; }
+      h1 { font-size: 28px; }
+      .actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      header { padding: 12px 16px; }
+      .hero { padding: 32px 16px 24px; }
+      h1 { font-size: 24px; }
+      .stat-val { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">
+      <div class="logo-icon">⚡</div>
+      PulseFlow
+    </a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn-header">Get Started</button>
+      <button class="mobile-menu" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="pill">✨ v2.4 Native Edge Telemetry</div>
+      <h1>Sub-millisecond observability for modern distributed apps</h1>
+      <p class="lead">Capture traces, track layout shifts, and debug multi-viewport performance issues in real-time across edge runtimes.</p>
+      <div class="actions">
+        <button class="btn-primary">Start Monitoring Free</button>
+        <button class="btn-secondary">Explore Live Sandbox</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <div class="stat-val">99.99%</div>
+        <div class="stat-lbl">Edge SLA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">&lt; 1ms</div>
+        <div class="stat-lbl">Trace Latency</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">12.8M</div>
+        <div class="stat-lbl">Active Spans</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">500k+</div>
+        <div class="stat-lbl">Engineers</div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feat-card">
+        <div class="feat-icon icon-1">⚡</div>
+        <h3>Ultra-Fast Sync Engine</h3>
+        <p>Bi-directional 120fps sync pipelines with zero layout blocking and frame coalescing.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon icon-2">🎯</div>
+        <h3>Device Frame Emulation</h3>
+        <p>True CSS hardware viewport bounds with pixel-perfect bezels, dynamic punch-holes, and notches.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon icon-3">🔍</div>
+        <h3>Automated QA Auditing</h3>
+        <p>Instant touch-target, overflow, and contrast auditing for every breakpoint simultaneously.</p>
+      </div>
+    </section>
+
+    <div class="showcase-strip">
+      <div class="showcase-text">
+        <h4>Enterprise-Grade Security & Privacy</h4>
+        <p>Zero third-party telemetry, self-hosted edge collectors, and SOC2 Type II compliance.</p>
+      </div>
+      <span class="badge-tag">VERIFIED SECURE</span>
+    </div>
+  </main>
+
+  <script>
+    // Message listener for synchronized scroll commands from parent Viewport Lab
+    window.addEventListener("message", (e) => {
+      if (e.data && (e.data.type === "SET_SCROLL" || e.data.type === "SCROLL_TO")) {
+        const maxY = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const targetY = typeof e.data.yRatio === "number"
+          ? e.data.yRatio * maxY
+          : (typeof e.data.y === "number" ? (e.data.y <= 1 ? e.data.y * maxY : e.data.y) : 0);
+        window.scrollTo({ top: targetY, left: 0, behavior: "auto" });
+      }
+    });
+  </script>
+</body>
+</html>

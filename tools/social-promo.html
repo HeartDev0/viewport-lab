@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=720, height=1280, initial-scale=1.0">
+  <title>Viewport Lab — Social Promo</title>
+  <style>
+    :root {
+      --bg: #090c14;
+      --card-bg: rgba(18, 24, 38, 0.75);
+      --card-border: rgba(255, 255, 255, 0.09);
+      --coral: #ff6b86;
+      --cyan: #5ee0d6;
+      --indigo: #6366f1;
+      --yellow: #ffc107;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    
+    html, body {
+      width: 720px;
+      height: 1280px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      position: relative;
+    }
+
+    .ambient-glow-1 {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.24) 0%, rgba(94, 224, 214, 0.08) 50%, transparent 70%);
+      pointer-events: none;
+    }
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: -100px;
+      right: -80px;
+      width: 500px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(255, 107, 134, 0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .promo-container {
+      position: relative;
+      width: 720px;
+      height: 1280px;
+      display: flex;
+      flex-direction: column;
+      padding: 36px 32px 32px;
+      z-index: 10;
+    }
+
+    /* Top Bar */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--coral), var(--indigo));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 6px 18px rgba(255, 107, 134, 0.35);
+    }
+    .brand-name {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(94, 224, 214, 0.12);
+      border: 1px solid rgba(94, 224, 214, 0.35);
+      border-radius: 20px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* Headline Area */
+    .hero-text {
+      text-align: center;
+      margin-bottom: 24px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .headline {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      max-width: 640px;
+      background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.25s ease;
+    }
+    .subheadline {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.35;
+      transition: all 0.25s ease;
+    }
+
+    /* Feature Badge Pill */
+    .floating-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.45);
+      border-radius: 30px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    /* Stage Area for Devices */
+    .device-stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      perspective: 1000px;
+      max-height: 700px;
+    }
+
+    /* Phone Mockup Styling */
+    .phone-mockup {
+      position: relative;
+      background: #0f131a;
+      border: 2.5px solid #282f3d;
+      border-radius: 38px;
+      box-shadow: 
+        0 20px 45px -12px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 0 0 1.5px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .phone-iphone {
+      width: 300px;
+      height: 640px;
+    }
+    .phone-android {
+      width: 280px;
+      height: 610px;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 82px;
+      height: 22px;
+      background: #000;
+      border-radius: 12px;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .punch-hole {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 35px;
+      overflow: hidden;
+      position: relative;
+      background: #0b0f19;
+    }
+    .phone-screen iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+    }
+
+    /* QA Drawer Overlay */
+    .qa-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(14, 18, 28, 0.96);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 16px 14px 22px;
+      border-radius: 20px 20px 0 0;
+      transform: translateY(105%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+      box-shadow: 0 -12px 30px rgba(0,0,0,0.6);
+    }
+    .qa-overlay.active {
+      transform: translateY(0%);
+    }
+    .qa-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .qa-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+    .qa-badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+    .badge-yellow { background: #4a3205; color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.4); }
+    .badge-red { background: #4a0f16; color: #ff6b86; border: 1px solid rgba(255, 107, 134, 0.4); }
+    .qa-text strong { font-size: 11px; color: #fff; display: block; margin-bottom: 1px; }
+    .qa-text span { font-size: 9px; color: var(--muted); }
+
+    /* Bottom Features & CTA */
+    .bottom-bar {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(8px);
+    }
+    .feature-card .feat-icon { font-size: 18px; }
+    .feature-card strong { font-size: 12px; font-weight: 700; color: #fff; }
+    .feature-card span { font-size: 10px; color: var(--muted); }
+
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(255, 107, 134, 0.15));
+      border: 1.2px solid rgba(99, 102, 241, 0.4);
+      border-radius: 18px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .cta-left h3 { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+    .cta-left p { font-size: 12px; color: var(--muted); }
+    .cta-btn {
+      background: linear-gradient(135deg, var(--coral), #ff4d6d);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(255, 107, 134, 0.4);
+    }
+
+    .timeline-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 5px;
+      background: linear-gradient(to right, var(--cyan), var(--coral));
+      width: 0%;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="promo-container">
+    <header class="top-header">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-name">Viewport Lab</div>
+          <div class="brand-tag">Open Source Developer Tool</div>
+        </div>
+      </div>
+      <div class="header-pill">🔥 Chrome & Edge Extension</div>
+    </header>
+
+    <section class="hero-text">
+      <div id="floating-pill" class="floating-pill">📱 Multi-Device Responsive Workspace</div>
+      <h1 id="headline" class="headline">Testing responsive websites shouldn't be painful.</h1>
+      <p id="subheadline" class="subheadline">Preview Apple & Android viewports side-by-side with zero reload geometry changes.</p>
+    </section>
+
+    <main class="device-stage">
+      <div id="mockup-iphone" class="phone-mockup phone-iphone">
+        <div class="dynamic-island"></div>
+        <div class="phone-screen">
+          <iframe id="iframe-iphone" src="about:blank"></iframe>
+          <div id="qa-drawer" class="qa-overlay">
+            <div class="qa-title">
+              <span>⚡ Responsive QA Checks</span>
+              <span class="qa-badge badge-yellow">3 Issues</span>
+            </div>
+            <div class="qa-item">
+              <span class="qa-badge badge-yellow">TOUCH</span>
+              <div class="qa-text">
+                <strong>Touch target too small (&lt;44px)</strong>
+                <span>Button #submit-login is 32×28px</span>
+              </div>
+            </div>
+            <div class="qa-item">
+              <span class="qa-badge badge-red">OVERFLOW</span>
+              <div class="qa-text">
+                <strong>Horizontal layout overflow</strong>
+                <span>412px content overflows 393px viewport</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="mockup-android" class="phone-mockup phone-android">
+        <div class="punch-hole"></div>
+        <div class="phone-screen">
+          <iframe id="iframe-android" src="about:blank"></iframe>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="features-row">
+        <div class="feature-card">
+          <div class="feat-icon">⚡</div>
+          <strong>60fps Sync Scroll</strong>
+          <span>Lockstep navigation</span>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🔄</div>
+          <strong>Zero Reloads</strong>
+          <span>Instant hot rotation</span>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🔒</div>
+          <strong>100% Local</strong>
+          <span>Zero telemetry</span>
+        </div>
+      </div>
+
+      <div class="cta-banner">
+        <div class="cta-left">
+          <h3>Get Viewport Lab Free</h3>
+          <p>github.com/heartdev/viewport-lab · MIT License</p>
+        </div>
+        <div class="cta-btn">
+          ⭐ Star on GitHub
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="progress-bar" class="timeline-progress"></div>
+
+  <script>
+    const headline = document.getElementById("headline");
+    const subheadline = document.getElementById("subheadline");
+    const pill = document.getElementById("floating-pill");
+    const iphone = document.getElementById("mockup-iphone");
+    const android = document.getElementById("mockup-android");
+    const qaDrawer = document.getElementById("qa-drawer");
+    const progressBar = document.getElementById("progress-bar");
+    const iframeIphone = document.getElementById("iframe-iphone");
+    const iframeAndroid = document.getElementById("iframe-android");
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    window.advanceSocialPromo = function(frame, totalFrames) {
+      const p = Math.max(0, Math.min(1, frame / totalFrames));
+      progressBar.style.width = (p * 100) + "%";
+
+      // Phase 1: The Hook (0s - 3.0s, Frames 0 - 65)
+      if (frame < 65) {
+        pill.innerHTML = "📱 Multi-Device Responsive Workspace";
+        pill.style.background = "rgba(99, 102, 241, 0.2)";
+        pill.style.borderColor = "rgba(99, 102, 241, 0.45)";
+        headline.innerHTML = "Testing responsive websites shouldn't be painful.";
+        subheadline.innerHTML = "Preview Apple & Android viewports side-by-side with zero reload geometry changes.";
+        qaDrawer.classList.remove("active");
+        iphone.style.transform = "scale(1)";
+        android.style.opacity = "1";
+      }
+
+      // Phase 2: Synchronized Scrolling (3.0s - 6.5s, Frames 65 - 150)
+      else if (frame < 150) {
+        pill.innerHTML = "⚡ Ultra-Smooth 60 FPS Sync Scroll";
+        pill.style.background = "rgba(94, 224, 214, 0.2)";
+        pill.style.borderColor = "rgba(94, 224, 214, 0.5)";
+        headline.innerHTML = "Butter-Smooth Synchronized Scroll.";
+        subheadline.innerHTML = "Frame-coalesced 60/120fps sync pipelines with echo loopback suppression.";
+        
+        const f = frame - 65;
+        let scrollY = 0;
+        if (f < 45) {
+          scrollY = easeInOutQuad(f / 45) * 0.75;
+        } else if (f < 58) {
+          scrollY = 0.75;
+        } else {
+          scrollY = 0.75 * (1 - easeInOutQuad((f - 58) / 27));
+        }
+        scrollY = Math.max(0, Math.min(0.75, scrollY));
+
+        try {
+          iframeIphone.contentWindow.postMessage({ type: "SET_SCROLL", yRatio: scrollY }, "*");
+          iframeAndroid.contentWindow.postMessage({ type: "SET_SCROLL", yRatio: scrollY }, "*");
+        } catch(e) {}
+      }
+
+      // Phase 3: Hot Zero-Reload Rotation (6.5s - 9.5s, Frames 150 - 225)
+      else if (frame < 225) {
+        pill.innerHTML = "🔄 Hot Zero-Reload Rotation";
+        pill.style.background = "rgba(255, 107, 134, 0.2)";
+        pill.style.borderColor = "rgba(255, 107, 134, 0.5)";
+        headline.innerHTML = "Hot Landscape Rotation without Reloading.";
+        subheadline.innerHTML = "CSS media queries adapt instantly while preserving all JavaScript state and inputs.";
+
+        const f = frame - 150;
+        if (f < 20) {
+          const t = easeInOutQuad(f / 20);
+          iphone.style.width = Math.round(300 + (560 - 300) * t) + "px";
+          iphone.style.height = Math.round(640 + (320 - 640) * t) + "px";
+          android.style.opacity = String(Math.max(0, 1 - t * 1.5));
+        } else if (f < 50) {
+          android.style.opacity = "0";
+          iphone.style.width = "560px";
+          iphone.style.height = "320px";
+        } else {
+          const t = easeInOutQuad((f - 50) / 20);
+          iphone.style.width = Math.round(560 - (560 - 300) * t) + "px";
+          iphone.style.height = Math.round(320 - (320 - 640) * t) + "px";
+          android.style.opacity = String(Math.min(1, t * 1.5));
+        }
+      }
+
+      // Phase 4: Deterministic QA Auditing (9.5s - 12.0s, Frames 225 - 280)
+      else if (frame < 280) {
+        pill.innerHTML = "🎯 Deterministic Responsive QA";
+        pill.style.background = "rgba(255, 193, 7, 0.2)";
+        pill.style.borderColor = "rgba(255, 193, 7, 0.5)";
+        headline.innerHTML = "Automated Breakpoint QA Auditing.";
+        subheadline.innerHTML = "Instantly catch touch targets &lt;44px, horizontal overflow, and missing alt attributes.";
+        iphone.style.transform = "scale(1.04)";
+        android.style.opacity = "0.35";
+        qaDrawer.classList.add("active");
+      }
+
+      // Phase 5: Outro & Call to Action (12.0s - 14.0s, Frames 280 - 336)
+      else {
+        pill.innerHTML = "⭐ 100% Free & Open Source";
+        pill.style.background = "rgba(99, 102, 241, 0.25)";
+        pill.style.borderColor = "rgba(99, 102, 241, 0.6)";
+        headline.innerHTML = "Level up your responsive workflow.";
+        subheadline.innerHTML = "Available now for Google Chrome, Microsoft Edge, Brave, and Arc browsers.";
+        qaDrawer.classList.remove("active");
+        iphone.style.transform = "scale(1)";
+        android.style.opacity = "1";
+      }
+    };
+  </script>
+</body>
+</html>

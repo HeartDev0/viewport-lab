@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1080, initial-scale=1.0">
+  <title>Viewport Lab — Social Promo Backdrop 1:1</title>
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --coral: #ff6b86;
+      --cyan: #5ee0d6;
+      --indigo: #6366f1;
+      --yellow: #ffc107;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    
+    html, body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      position: relative;
+    }
+
+    .glow-top {
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(94, 224, 214, 0.1) 50%, transparent 70%);
+      pointer-events: none;
+    }
+    .glow-bottom {
+      position: absolute;
+      bottom: -120px;
+      right: -80px;
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 107, 134, 0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      width: 1080px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 30px 40px;
+      z-index: 10;
+    }
+
+    /* TOP SECTION (y: 40px to 210px) */
+    .top-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--coral), var(--indigo));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 6px 18px rgba(255, 107, 134, 0.35);
+    }
+    .brand-name {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .center-hook {
+      text-align: right;
+    }
+    .hook-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(255, 107, 134, 0.15);
+      border: 1px solid rgba(255, 107, 134, 0.4);
+      border-radius: 20px;
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .hook-desc {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* CENTER VIDEO SLOT (y: 220px to 802px, height: 582px) */
+    .video-frame-slot {
+      width: 1020px;
+      height: 582px;
+      margin: 0 auto;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 20px 50px -10px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(99, 102, 241, 0.2);
+      background: #000;
+    }
+
+    /* BOTTOM SECTION (y: 830px to 1040px) */
+    .bottom-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 10px;
+    }
+    .features-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .feature-pill {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .feature-pill span { color: var(--muted); font-size: 11px; font-weight: 400; margin-left: auto; }
+
+    .cta-card {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(255, 107, 134, 0.16));
+      border: 1.2px solid rgba(99, 102, 241, 0.4);
+      border-radius: 16px;
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cta-title { font-size: 20px; font-weight: 900; color: #fff; }
+    .cta-url { font-size: 13px; color: var(--cyan); font-weight: 600; font-family: monospace; }
+    .cta-btn {
+      background: linear-gradient(135deg, var(--coral), #ff4d6d);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(255, 107, 134, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-top"></div>
+  <div class="glow-bottom"></div>
+  <div class="bg-grid"></div>
+
+  <div class="container">
+    <div class="top-section">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-name">Viewport Lab</div>
+          <div class="brand-sub">Multi-Device Responsive Review & QA</div>
+        </div>
+      </div>
+      <div class="center-hook">
+        <div class="hook-badge">✨ Free Chrome & Edge Extension</div>
+        <div class="hook-desc">60fps Sync Scroll · Zero-Reload Rotation · Deterministic QA</div>
+      </div>
+    </div>
+
+    <div class="video-frame-slot"></div>
+
+    <div class="bottom-section">
+      <div class="features-row">
+        <div class="feature-pill">⚡ 60fps Sync Scroll <span>Lockstep</span></div>
+        <div class="feature-pill">🔄 Zero-Reload Rotation <span>Hot swap</span></div>
+        <div class="feature-pill">🎯 Deterministic QA <span>Touch & Alt</span></div>
+        <div class="feature-pill">🔒 100% Local <span>Zero trackers</span></div>
+      </div>
+
+      <div class="cta-card">
+        <div>
+          <div class="cta-title">Free & Open Source on GitHub</div>
+          <div class="cta-url">github.com/heartdev/viewport-lab</div>
+        </div>
+        <div class="cta-btn">
+          ⭐ Star on GitHub
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

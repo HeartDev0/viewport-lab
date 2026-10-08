@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viewport Lab</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand brand-heartdev" aria-label="Viewport Lab by HeartDev">
+        <img class="brand-logo" src="assets/heartdev-logo.png" alt="" aria-hidden="true" />
+        <div class="brand-copy"><strong>Viewport Lab</strong><span>Responsive review workspace</span><small>Powered by HeartDev</small></div>
+      </div>
+
+      <form id="url-form" class="url-form" autocomplete="off">
+        <div class="url-field">
+          <span class="url-lock" aria-hidden="true">⌁</span>
+          <input id="url-input" type="text" inputmode="url" placeholder="https://your-site.com or localhost:5173" spellcheck="false" list="url-history-list" />
+          <datalist id="url-history-list"></datalist>
+          <button class="icon-button" id="reload-all" type="button" title="Reload every device" aria-label="Reload every device"><svg viewBox="0 0 512 512" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M265.614 206.387H456V16h-32v133.887l-26.137-26.137c-79.539-79.539-208.96-79.54-288.5 0s-79.539 208.96 0 288.5a204.23 204.23 0 0 0 288.5 0l-22.627-22.627c-67.063 67.063-176.182 67.063-243.244 0s-67.063-176.183 0-243.246 176.182-67.063 243.245 0l28.01 28.01H265.614Z"/></svg></button>
+        </div>
+        <button class="primary-button" type="submit">Preview</button>
+      </form>
+
+      <div class="top-actions">
+        <button id="run-checks-top" class="ghost-button accent-ghost" type="button" title="Run responsive checks · Alt+C" aria-keyshortcuts="Alt+C">✓ Checks</button>
+        <div id="top-view-switcher" class="segmented two mini-segmented" role="group" aria-label="View mode">
+          <button type="button" data-view="crisp" class="active" title="Prioritize visual clarity · C" aria-keyshortcuts="C">Crisp</button>
+          <button type="button" data-view="fit" title="Fit the complete device set · F" aria-keyshortcuts="F">Fit</button>
+        </div>
+        <button id="fit-button" hidden aria-hidden="true" tabindex="-1"></button>
+        <button id="add-device-top" class="primary-button compact" type="button" title="Add device · +" aria-keyshortcuts="+">+ Device</button>
+        <a id="kofi-top-btn" class="kofi-top-link" href="https://ko-fi.com/heartdevowo" target="_blank" rel="noreferrer noopener" title="Apoyar a HeartDev en Ko-fi"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:4px;vertical-align:-2px"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.047 3.974-4.047 3.974s-2.793-2.515-4.043-3.968c-.961-1.118-1.543-2.457-1.543-3.748 0-2.31 1.764-4.14 4.047-4.14 1.341 0 2.565.664 3.327 1.693.762-1.029 1.986-1.693 3.327-1.693 2.283 0 4.047 1.83 4.047 4.14 0 1.291-.582 2.63-1.117 3.742zm7.117-1.062c-.439 1.258-1.517 2.112-2.915 2.277V7.126h2.247c1.332.223 1.107 2.871.668 4.271z"/></svg><span>Ko-fi</span></a>
+        <button id="sound-toggle-btn" class="icon-button subtle" type="button" title="Mute UI sounds" aria-label="Toggle UI sounds"><svg viewBox="0 0 512 512" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M264 416.74V95.26a16 16 0 0 0-25.9-12.51L128 168.39H48a16 16 0 0 0-16 16v143.22a16 16 0 0 0 16 16h80l110.1 85.64A16 16 0 0 0 264 416.74ZM352 176a16 16 0 0 0-16 16 96 96 0 0 1 0 128 16 16 0 1 0 22.63 22.63 128 128 0 0 0 0-173.26A16 16 0 0 0 352 176Zm45.25-45.25a16 16 0 0 0-22.63 22.63 192 192 0 0 1 0 273.24 16 16 0 0 0 22.63 22.63 224 224 0 0 0 0-318.5Z"/></svg></button>
+        <button id="help-button" class="icon-button subtle" type="button" title="Quick tour and shortcuts" aria-label="Tutorial and help">?</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <aside class="sidebar">
+        <section class="panel-section devices-section">
+          <div class="section-heading">
+            <div><h2>Devices</h2><p id="device-count">0 / 5</p></div>
+            <button id="add-device-side" class="icon-button subtle" type="button" title="Add device" aria-label="Add device"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M440 240H272V72h-32v168H72v32h168v168h32V272h168z"/></svg></button>
+          </div>
+          <div id="device-list" class="device-list"></div>
+        </section>
+
+        <section class="panel-section controls-section">
+          <div class="control-row column">
+            <span class="control-label">View mode</span>
+            <div id="view-switcher" class="segmented two" role="group" aria-label="View mode">
+              <button type="button" data-view="crisp" class="active" title="Prioritize visual clarity · C" aria-keyshortcuts="C">Crisp</button>
+              <button type="button" data-view="fit" title="Fit the complete device set · F" aria-keyshortcuts="F">Fit</button>
+            </div>
+          </div>
+
+          <label class="field-block compact-field">
+            <span>Workspace</span>
+            <select id="workspace-resolution">
+              <option value="auto">Auto</option>
+              <option value="1080">1080p · 1920×1080</option>
+              <option value="1440">1440p · 2560×1440</option>
+              <option value="4k">4K · 3840×2160</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+          <div id="custom-workspace-fields" class="field-grid two compact-grid" hidden>
+            <label><span>Canvas W</span><input id="workspace-width" type="number" min="900" max="7680" step="1" /></label>
+            <label><span>Canvas H</span><input id="workspace-height" type="number" min="600" max="4320" step="1" /></label>
+          </div>
+
+          <div class="control-row column">
+            <div class="control-label-row"><label for="zoom-range">Workspace zoom</label><output id="zoom-output">100%</output></div>
+            <input id="zoom-range" type="range" min="50" max="150" step="5" value="100" />
+          </div>
+
+          <div class="control-row column">
+            <span class="control-label">Layout</span>
+            <div id="layout-switcher" class="segmented" role="group" aria-label="Layout">
+              <button type="button" data-layout="grid" class="active" title="Grid layout · 1" aria-keyshortcuts="1">Grid</button>
+              <button type="button" data-layout="row" title="Row layout · 2" aria-keyshortcuts="2">Row</button>
+              <button type="button" data-layout="focus" title="Focus layout · 3" aria-keyshortcuts="3">Focus</button>
+              <button type="button" data-layout="free" title="Free layout · 4" aria-keyshortcuts="4">Free</button>
+            </div>
+          </div>
+
+          <div class="control-subheading">Display</div>
+          <label class="switch-row"><span><strong>Device frames</strong><small>Decorative shells; viewport stays independent</small></span><input id="frames-toggle" type="checkbox" checked /><span class="switch"></span></label>
+          <label class="switch-row"><span><strong>Safe area overlay</strong><small>Show cutouts and protected content area</small></span><input id="safe-area-toggle" type="checkbox" /><span class="switch"></span></label>
+
+          <div class="control-subheading">Preview behavior</div>
+          <label class="switch-row"><span><strong>Sync scroll</strong><small>Relative position across previews</small></span><input id="scroll-toggle" type="checkbox" /><span class="switch"></span></label>
+          <label class="switch-row"><span><strong>Sync navigation</strong><small>Follow links across every device</small></span><input id="navigation-toggle" type="checkbox" /><span class="switch"></span></label>
+          <label class="switch-row warning-switch"><span><strong>Compatibility mode</strong><small>Allow sites that normally block embedded previews</small></span><input id="compatibility-toggle" type="checkbox" checked /><span class="switch"></span></label>
+        </section>
+
+        <section id="selected-editor" class="panel-section selected-section" hidden>
+          <div class="section-heading compact-heading"><div><h2>Selected device</h2><p id="selected-preset-label"></p></div></div>
+
+          <label class="field-block">
+            <span>Preset</span>
+            <select id="selected-preset"></select>
+          </label>
+
+          <div class="field-grid two">
+            <label><span>Width</span><input id="selected-width" type="number" min="240" max="1800" step="1" /></label>
+            <label><span>Height</span><input id="selected-height" type="number" min="320" max="2200" step="1" /></label>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field-block"><span>Shell</span><select id="selected-shell"><option value="pill">Modern pill</option><option value="notch">Classic notch</option><option value="punch">Punch-hole</option><option value="clean">Clean bezel</option><option value="tablet">Tablet</option></select></label>
+            <label class="field-block"><span>Frame color</span><select id="selected-color"><option value="graphite">Graphite</option><option value="silver">Silver</option><option value="blue">Blue titanium</option><option value="warm">Warm titanium</option></select></label>
+          </div>
+
+          <div class="editor-actions">
+            <button id="rotate-selected" type="button" class="ghost-button" title="Rotate · R" aria-keyshortcuts="R"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:5px;vertical-align:-2px"><path d="m410.168 133.046-28.958-28.958 82.807-.088-.034-32L328 72.144V208h32v-79.868l27.541 27.541A152.5 152.5 0 0 1 279.972 416l.056 32a184.5 184.5 0 0 0 130.14-314.954M232.028 104l-.056-32a184.5 184.5 0 0 0-130.14 314.954L130.878 416H48v32h136V312h-32v79.868l-27.541-27.541A152.5 152.5 0 0 1 232.028 104"/></svg>Rotate</button>
+            <button id="duplicate-selected" type="button" class="ghost-button" title="Duplicate · Ctrl/Cmd+D"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:5px;vertical-align:-2px"><path d="M408 432h-32v32H112V136h32v-32H80v392h328z"/><path d="M176 16v384h320V153.373L358.627 16Zm288 352H208V48h104v152h152Zm0-200H344V48h1.372L464 166.627Z"/></svg>Duplicate</button>
+            <button id="capture-selected" type="button" class="ghost-button" title="Capture screenshot (PNG)"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:5px;vertical-align:-2px"><path d="M471.993 112h-89.2l-16.242-46.75a32.02 32.02 0 0 0-30.229-21.5H175.241a31.99 31.99 0 0 0-30.294 21.691L129.1 112H40a24.027 24.027 0 0 0-24 24v312a24.027 24.027 0 0 0 24 24h431.993a24.027 24.027 0 0 0 24-24V136a24.027 24.027 0 0 0-24-24m-8 328H48.007V144h104.01l23.224-68.25h161.081l23.71 68.25h103.961Z"/><path d="M256 168a114 114 0 1 0 114 114 114.13 114.13 0 0 0-114-114m0 196a82 82 0 1 1 82-82 82.093 82.093 0 0 1-82 82"/></svg>Screenshot</button>
+            <button id="remove-selected" type="button" class="danger-button" title="Remove · Delete" aria-keyshortcuts="Delete"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:5px;vertical-align:-2px"><path d="m427.314 107.313-22.628-22.626L256 233.373 107.314 84.687l-22.628 22.626L233.373 256 84.686 404.687l22.628 22.626L256 278.627l148.686 148.686 22.628-22.626L278.627 256z"/></svg>Remove</button>
+          </div>
+        </section>
+
+        <section class="panel-section sweep-section">
+          <div class="section-heading compact-heading"><div><h2>Responsive sweep</h2><p>Resize without reloading the page</p></div></div>
+          <div class="control-label-row"><label for="sweep-range">Selected width</label><output id="sweep-output">390 px</output></div>
+          <input id="sweep-range" type="range" min="240" max="1440" step="1" value="390" />
+          <div class="editor-actions compact-actions">
+            <button id="sweep-common" class="ghost-button" type="button">Scan common widths</button>
+            <button id="run-checks-side" class="ghost-button accent-ghost" type="button" title="Check current viewport">✓ Check current</button>
+          </div>
+        </section>
+
+        <section class="panel-section session-section">
+          <div class="section-heading compact-heading"><div><h2>Workspaces</h2><p>Saved locally</p></div></div>
+          <div class="session-row">
+            <select id="session-select"><option value="">Saved workspace…</option></select>
+            <button id="save-session" type="button" class="icon-button subtle" title="Save current workspace"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M440 240H272V72h-32v168H72v32h168v168h32V272h168z"/></svg></button>
+            <button id="delete-session" type="button" class="icon-button subtle danger-icon" title="Delete selected workspace"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M96 472a23.82 23.82 0 0 0 23.579 24h272.842A23.82 23.82 0 0 0 416 472V152H96Zm32-288h256v280H128Z"/><path d="M168 216h32v200h-32zm72 0h32v200h-32zm72 0h32v200h-32zm16-128V40c0-13.458-9.488-24-21.6-24H205.6C193.488 16 184 26.542 184 40v48H64v32h384V88ZM216 48h80v40h-80Z"/></svg></button>
+          </div>
+        </section>
+
+        <details class="panel-section disclosure-section agent-section">
+          <summary><span><strong>Integrations</strong><small>Optional developer tools</small></span><span id="bridge-status" class="status-pill offline">Offline</span></summary>
+          <div class="disclosure-content">
+            <p class="disclosure-note">The MCP bridge is optional and stays outside the core responsive workflow.</p>
+            <label class="switch-row"><span><strong>Allow agent control</strong><small>Local agents may inspect, test and interact with previews</small></span><input id="agent-control-toggle" type="checkbox" /><span class="switch"></span></label>
+            <button id="bridge-help" class="ghost-button full" type="button">MCP setup</button>
+          </div>
+        </details>
+
+        <footer class="sidebar-footer"><span class="privacy-dot"></span>Local processing · no telemetry · no backend</footer>
+      </aside>
+
+      <main class="workspace-wrap">
+        <div class="workspace-toolbar">
+          <div class="workspace-summary"><span id="workspace-title">Responsive workspace</span><small id="workspace-status">Open a website to start previewing.</small></div>
+          <div class="workspace-toolbar-actions">
+            <span id="resolution-badge" class="badge">Auto canvas</span>
+            <span id="clarity-badge" class="badge strong">Crisp 100%</span>
+            <button id="capture-workspace" class="ghost-button mini" type="button" title="Capture workspace screenshot"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true" style="margin-right:5px;vertical-align:-2px"><path d="M471.993 112h-89.2l-16.242-46.75a32.02 32.02 0 0 0-30.229-21.5H175.241a31.99 31.99 0 0 0-30.294 21.691L129.1 112H40a24.027 24.027 0 0 0-24 24v312a24.027 24.027 0 0 0 24 24h431.993a24.027 24.027 0 0 0 24-24V136a24.027 24.027 0 0 0-24-24m-8 328H48.007V144h104.01l23.224-68.25h161.081l23.71 68.25h103.961Z"/><path d="M256 168a114 114 0 1 0 114 114 114.13 114.13 0 0 0-114-114m0 196a82 82 0 1 1 82-82 82.093 82.093 0 0 1-82 82"/></svg>Screenshot</button>
+            <button id="issues-toggle" class="ghost-button mini" type="button">Issues <span id="issue-count">0</span></button>
+          </div>
+        </div>
+
+        <aside id="kofi-banner" class="kofi-banner" role="region" aria-label="Anuncio Ko-fi HeartDev">
+          <div class="kofi-banner-left">
+            <div class="kofi-banner-avatar">
+              <img src="assets/app-icon.png" alt="" class="kofi-avatar-img" />
+              <span class="kofi-heart-badge">☕</span>
+            </div>
+            <div class="kofi-banner-text">
+              <div class="kofi-banner-title">
+                <strong>¡Apoya el desarrollo de Viewport Lab!</strong>
+                <span class="kofi-pill-tag">HeartDev</span>
+              </div>
+              <p class="kofi-banner-desc">Agradecería mucho tu donación al entrar para seguir mejorando la herramienta, añadir nuevas funciones y mantenerla 100% gratuita y sin anuncios.</p>
+            </div>
+          </div>
+          <div class="kofi-banner-right">
+            <a href="https://ko-fi.com/heartdevowo" target="_blank" rel="noreferrer noopener" class="kofi-donate-btn" id="kofi-banner-donate-btn">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.047 3.974-4.047 3.974s-2.793-2.515-4.043-3.968c-.961-1.118-1.543-2.457-1.543-3.748 0-2.31 1.764-4.14 4.047-4.14 1.341 0 2.565.664 3.327 1.693.762-1.029 1.986-1.693 3.327-1.693 2.283 0 4.047 1.83 4.047 4.14 0 1.291-.582 2.63-1.117 3.742zm7.117-1.062c-.439 1.258-1.517 2.112-2.915 2.277V7.126h2.247c1.332.223 1.107 2.871.668 4.271z"/></svg>
+              <span>Donar en Ko-fi ❤️</span>
+            </a>
+            <button id="close-kofi-banner" type="button" class="icon-button subtle" title="Cerrar anuncio" aria-label="Cerrar anuncio">
+              <svg viewBox="0 0 512 512" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="m427.314 107.313-22.628-22.626L256 233.373 107.314 84.687l-22.628 22.626L233.373 256 84.686 404.687l22.628 22.626L256 278.627l148.686 148.686 22.628-22.626L278.627 256z"/></svg>
+            </button>
+          </div>
+        </aside>
+
+        <div id="breakpoint-ruler" class="breakpoint-ruler" aria-label="Breakpoint ruler"></div>
+
+        <div id="workspace-scroller" class="workspace-scroller">
+          <div id="device-board" class="device-board grid" aria-live="polite"></div>
+        </div>
+
+        <div class="workspace-watermark" aria-hidden="true"><span>HEARTDEV</span><small>PIXEL UI</small></div>
+
+        <section id="issues-panel" class="issues-panel" hidden>
+          <div class="issues-header">
+            <div><strong>Responsive checks</strong><span id="issues-summary">No checks run yet.</span></div>
+            <div class="issues-actions"><button id="inspect-page" class="ghost-button mini" type="button">Inspect page</button><button id="rerun-checks" class="primary-button compact" type="button">Run checks</button><button id="close-issues" class="icon-button" type="button" aria-label="Close issues"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="m427.314 107.313-22.628-22.626L256 233.373 107.314 84.687l-22.628 22.626L233.373 256 84.686 404.687l22.628 22.626L256 278.627l148.686 148.686 22.628-22.626L278.627 256z"/></svg></button></div>
+          </div>
+          <div id="issues-list" class="issues-list"></div>
+          <pre id="inspect-output" class="inspect-output" hidden></pre>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="device-dialog" class="device-dialog">
+    <form method="dialog" class="dialog-card" id="device-dialog-form">
+      <div class="dialog-header"><div><p class="eyebrow">Add preview</p><h2>Choose a device</h2><p>Presets control the responsive viewport. Shells are decorative.</p></div><button type="button" id="close-dialog" class="icon-button" aria-label="Close"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="m427.314 107.313-22.628-22.626L256 233.373 107.314 84.687l-22.628 22.626L233.373 256 84.686 404.687l22.628 22.626L256 278.627l148.686 148.686 22.628-22.626L278.627 256z"/></svg></button></div>
+      <div id="preset-grid" class="preset-grid grouped"></div>
+      <div class="custom-device-card"><div><strong>Custom viewport</strong><small>Create any width and height.</small></div><div class="custom-inline-fields"><label><span>W</span><input id="custom-width" type="number" value="390" min="240" max="1800" /></label><span>×</span><label><span>H</span><input id="custom-height" type="number" value="844" min="320" max="2200" /></label><button id="add-custom" type="button" class="primary-button compact">Add custom</button></div></div>
+    </form>
+  </dialog>
+
+  <dialog id="tutorial-dialog" class="tutorial-dialog">
+    <div class="tutorial-card">
+      <div class="tutorial-progress"><span id="tutorial-progress-text">1 / 7</span><div><i id="tutorial-progress-bar"></i></div></div>
+      <div id="tutorial-icon" class="tutorial-icon">⌁</div>
+      <p class="eyebrow">Quick tour</p>
+      <h2 id="tutorial-title">Preview a real website</h2>
+      <p id="tutorial-copy"></p>
+      <div class="tutorial-actions"><button id="tutorial-skip" class="ghost-button" type="button">Skip</button><button id="tutorial-next" class="primary-button" type="button">Next</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="bridge-dialog" class="bridge-dialog">
+    <div class="dialog-card compact-dialog">
+      <div class="dialog-header"><div><p class="eyebrow">Local agent bridge</p><h2>MCP setup</h2><p>Agents do not run inside the extension. A local MCP server exposes Viewport Lab tools.</p></div><button id="close-bridge-dialog" class="icon-button" type="button" aria-label="Close MCP dialog"><svg viewBox="0 0 512 512" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="m427.314 107.313-22.628-22.626L256 233.373 107.314 84.687l-22.628 22.626L233.373 256 84.686 404.687l22.628 22.626L256 278.627l148.686 148.686 22.628-22.626L278.627 256z"/></svg></button></div>
+      <ol class="setup-list">
+        <li>Open a terminal in the extension folder.</li>
+        <li>Run <code>cd mcp &amp;&amp; npm install</code>.</li>
+        <li>Configure your MCP host to run <code>node /absolute/path/to/mcp/server.mjs</code>.</li>
+        <li>Keep Viewport Lab open and enable <strong>Allow agent control</strong>.</li>
+      </ol>
+      <div class="bridge-tools-preview"><strong>Agent tools</strong><span>state · open URL · devices · checks · sweep · inspect · click · fill · screenshot</span></div>
+      <p class="privacy-note">The bridge binds to <code>127.0.0.1</code> only. Page data is sent only to the local MCP process when an agent explicitly requests it.</p>
+    </div>
+  </dialog>
+
+  <template id="empty-template">
+    <div class="empty-state">
+      <div class="empty-icon pixel-heart"><span></span><i></i></div>
+      <h2>Open a site to begin</h2>
+      <p>Compare real responsive viewports side by side. Device shells are visual only and never change the CSS viewport.</p>
+      <div class="empty-pills"><span>1:1 review</span><span>multi-device</span><span>local-first</span></div>
+      <div class="empty-kofi-box">
+        <div class="empty-kofi-info">
+          <strong>¿Te gusta Viewport Lab?</strong>
+          <span>Agradecería mucho tu donación al entrar para apoyar a HeartDev ❤️</span>
+        </div>
+        <a href="https://ko-fi.com/heartdevowo" target="_blank" rel="noreferrer noopener" class="kofi-donate-btn mini">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.047 3.974-4.047 3.974s-2.793-2.515-4.043-3.968c-.961-1.118-1.543-2.457-1.543-3.748 0-2.31 1.764-4.14 4.047-4.14 1.341 0 2.565.664 3.327 1.693.762-1.029 1.986-1.693 3.327-1.693 2.283 0 4.047 1.83 4.047 4.14 0 1.291-.582 2.63-1.117 3.742zm7.117-1.062c-.439 1.258-1.517 2.112-2.915 2.277V7.126h2.247c1.332.223 1.107 2.871.668 4.271z"/></svg>
+          <span>Donar en Ko-fi</span>
+        </a>
+      </div>
+    </div>
+  </template>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

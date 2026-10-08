@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1920, initial-scale=1.0">
+  <title>Viewport Lab — Social Promo Backdrop 9:16</title>
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --coral: #ff6b86;
+      --cyan: #5ee0d6;
+      --indigo: #6366f1;
+      --yellow: #ffc107;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      position: relative;
+    }
+
+    /* Ambient Glows */
+    .glow-top {
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(94, 224, 214, 0.12) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .glow-bottom {
+      position: absolute;
+      bottom: -150px;
+      right: -100px;
+      width: 900px;
+      height: 750px;
+      background: radial-gradient(circle, rgba(255, 107, 134, 0.22) 0%, rgba(99, 102, 241, 0.1) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 65px 30px 55px;
+      z-index: 10;
+    }
+
+    /* TOP SECTION (y: 70px to 620px) */
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .header-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--coral), var(--indigo));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 24px rgba(255, 107, 134, 0.35);
+    }
+    .brand-name {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: left;
+    }
+    .brand-sub {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: rgba(94, 224, 214, 0.12);
+      border: 1px solid rgba(94, 224, 214, 0.35);
+      border-radius: 30px;
+      color: var(--cyan);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hook-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      background: rgba(255, 107, 134, 0.15);
+      border: 1px solid rgba(255, 107, 134, 0.4);
+      border-radius: 40px;
+      color: var(--coral);
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(255, 107, 134, 0.25);
+    }
+    .main-title {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      max-width: 960px;
+      background: linear-gradient(180deg, #ffffff 40%, #a4b1c2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--muted);
+      max-width: 860px;
+      line-height: 1.4;
+    }
+
+    /* CENTER VIDEO PLACEHOLDER (y: 640px to 1260px) */
+    .video-frame-slot {
+      width: 1020px;
+      height: 600px;
+      margin: 0 auto;
+      border-radius: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(99, 102, 241, 0.2);
+      background: #000;
+      position: relative;
+    }
+
+    /* BOTTOM SECTION (y: 1280px to 1860px) */
+    .bottom-section {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      backdrop-filter: blur(14px);
+    }
+    .feat-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .box-1 { background: rgba(94, 224, 214, 0.15); color: var(--cyan); border: 1px solid rgba(94, 224, 214, 0.3); }
+    .box-2 { background: rgba(255, 107, 134, 0.15); color: var(--coral); border: 1px solid rgba(255, 107, 134, 0.3); }
+    .box-3 { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+    .box-4 { background: rgba(255, 193, 7, 0.15); color: var(--yellow); border: 1px solid rgba(255, 193, 7, 0.3); }
+
+    .feat-info strong { font-size: 18px; font-weight: 800; color: #fff; display: block; margin-bottom: 4px; }
+    .feat-info span { font-size: 14px; color: var(--muted); }
+
+    .cta-card {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(255, 107, 134, 0.18));
+      border: 1.5px solid rgba(99, 102, 241, 0.45);
+      border-radius: 26px;
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+    .cta-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 4px; }
+    .cta-url { font-size: 16px; color: var(--cyan); font-weight: 600; font-family: monospace; }
+    .cta-button {
+      background: linear-gradient(135deg, var(--coral), #ff4d6d);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      padding: 18px 36px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 25px rgba(255, 107, 134, 0.45);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-top"></div>
+  <div class="glow-bottom"></div>
+  <div class="bg-grid"></div>
+
+  <div class="container">
+    <!-- Top Header & Hook -->
+    <div class="top-section">
+      <div class="header-bar">
+        <div class="brand">
+          <div class="brand-icon">⚡</div>
+          <div>
+            <div class="brand-name">Viewport Lab</div>
+            <div class="brand-sub">Open Source Workspace</div>
+          </div>
+        </div>
+        <div class="badge-pill">🔥 Chrome & Edge Extension</div>
+      </div>
+
+      <div class="hook-tag">✨ Stop Testing On One Screen</div>
+      <h1 class="main-title">Multi-Device Responsive Review & QA</h1>
+      <p class="subtitle">Test Apple, Android & Tablet breakpoints side-by-side with zero-reload geometry changes and 60fps sync scroll.</p>
+    </div>
+
+    <!-- Center Slot for Video -->
+    <div class="video-frame-slot"></div>
+
+    <!-- Bottom Features & Call to Action -->
+    <div class="bottom-section">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon-box box-1">⚡</div>
+          <div class="feat-info">
+            <strong>60fps Sync Scroll</strong>
+            <span>Relative lockstep navigation</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon-box box-2">🔄</div>
+          <div class="feat-info">
+            <strong>Zero-Reload Rotation</strong>
+            <span>Keep JavaScript state alive</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon-box box-3">🎯</div>
+          <div class="feat-info">
+            <strong>Deterministic QA</strong>
+            <span>Touch targets & overflows</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon-box box-4">🔒</div>
+          <div class="feat-info">
+            <strong>100% Local & Free</strong>
+            <span>Zero telemetry or trackers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-card">
+        <div>
+          <div class="cta-title">Get Viewport Lab Free</div>
+          <div class="cta-url">github.com/heartdev/viewport-lab</div>
+        </div>
+        <div class="cta-button">
+          ⭐ Star on GitHub
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
