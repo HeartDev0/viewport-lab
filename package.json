@@ -4,11 +4,12 @@
   "private": true,
   "description": "Open-source multi-device responsive review and QA browser extension",
   "scripts": {
-    "test": "node tools/check.mjs && node tools/privacy-check.mjs && node --check mcp/server.mjs && node tools/basic-regression-check.mjs && node tools/phase0-audit.mjs && node tools/phase1-design-audit.mjs && node tools/focus-layout-audit.mjs",
+    "test": "node tools/check.mjs && node tools/privacy-check.mjs && node --check mcp/server.mjs && node tools/mcp-audit.mjs && node tools/basic-regression-check.mjs && node tools/phase0-audit.mjs && node tools/phase1-design-audit.mjs && node tools/focus-layout-audit.mjs",
     "audit": "npm test",
     "check": "node tools/check.mjs",
     "privacy-check": "node tools/privacy-check.mjs",
     "check:mcp": "node --check mcp/server.mjs",
+    "check:mcp-audit": "node tools/mcp-audit.mjs",
     "check:basic": "node tools/basic-regression-check.mjs",
     "check:phase0": "node tools/phase0-audit.mjs",
     "check:phase1": "node tools/phase1-design-audit.mjs",

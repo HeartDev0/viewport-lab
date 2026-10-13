@@ -153,22 +153,26 @@ function buildServer() {
 
   server.registerTool('viewport_status', {
     description: 'Get the current Viewport Lab URL, devices, selection, workspace mode and agent-control state.',
-    inputSchema: z.object(sessionField)
+    inputSchema: z.object(sessionField),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId }) => textResult(await dispatch('get_state', {}, sessionId)));
 
   server.registerTool('viewport_list_presets', {
     description: 'List device presets available in Viewport Lab.',
-    inputSchema: z.object(sessionField)
+    inputSchema: z.object(sessionField),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId }) => textResult(await dispatch('list_presets', {}, sessionId)));
 
   server.registerTool('viewport_open_url', {
     description: 'Open an HTTP/HTTPS URL in all current responsive previews without recreating device shells.',
-    inputSchema: z.object({ ...sessionField, url: z.string().min(1) })
+    inputSchema: z.object({ ...sessionField, url: z.string().min(1) }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true }
   }, async ({ sessionId, url }) => textResult(await dispatch('open_url', { url }, sessionId)));
 
   server.registerTool('viewport_select_device', {
     description: 'Select a device by id, exact name, preset id or zero-based index.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef })
+    inputSchema: z.object({ ...sessionField, device: deviceRef }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, device }) => textResult(await dispatch('select_device', { device }, sessionId)));
 
   server.registerTool('viewport_add_device', {
@@ -179,12 +183,14 @@ function buildServer() {
       name: z.string().optional(),
       width: z.number().int().min(240).max(1800).optional(),
       height: z.number().int().min(320).max(2200).optional()
-    })
+    }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('add_device', params, sessionId)));
 
   server.registerTool('viewport_remove_device', {
     description: 'Remove a responsive preview device.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef })
+    inputSchema: z.object({ ...sessionField, device: deviceRef }),
+    annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, device }) => textResult(await dispatch('remove_device', { device }, sessionId)));
 
   server.registerTool('viewport_set_device', {
@@ -199,7 +205,8 @@ function buildServer() {
       color: z.enum(['graphite', 'silver', 'blue', 'warm']).optional(),
       name: z.string().optional(),
       rotate: z.boolean().optional()
-    })
+    }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('set_device', params, sessionId)));
 
   server.registerTool('viewport_set_workspace', {
@@ -212,47 +219,56 @@ function buildServer() {
       resolution: z.enum(['auto', '1080', '1440', '4k', 'custom']).optional(),
       workspaceWidth: z.number().int().min(900).max(7680).optional(),
       workspaceHeight: z.number().int().min(600).max(4320).optional()
-    })
+    }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('set_workspace', params, sessionId)));
 
   server.registerTool('viewport_run_checks', {
     description: 'Run deterministic responsive QA checks such as overflow, clipped text, touch targets, missing alt text and form labels. No AI model is used.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef, all: z.boolean().optional() })
+    inputSchema: z.object({ ...sessionField, device: deviceRef, all: z.boolean().optional() }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('run_checks', params, sessionId, 60_000)));
 
   server.registerTool('viewport_inspect_page', {
     description: 'Inspect page metadata, viewport/document dimensions, accessible CSS breakpoints, landmarks and responsive issues for one device.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef })
+    inputSchema: z.object({ ...sessionField, device: deviceRef }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, device }) => textResult(await dispatch('inspect_page', { device }, sessionId)));
 
   server.registerTool('viewport_inspect_element', {
     description: 'Inspect one element by CSS selector, returning bounds, text and relevant computed styles.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1) })
+    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1) }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('inspect_element', params, sessionId)));
 
   server.registerTool('viewport_click', {
     description: 'Click an element inside a preview by CSS selector. Intended for local development/QA automation.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1) })
+    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1) }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('click', params, sessionId)));
 
   server.registerTool('viewport_fill', {
     description: 'Fill a text/select control by CSS selector and fire input/change events. Password fields are blocked.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1), value: z.union([z.string(), z.number(), z.boolean()]) })
+    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().min(1), value: z.union([z.string(), z.number(), z.boolean()]) }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('fill', params, sessionId)));
 
   server.registerTool('viewport_press', {
     description: 'Dispatch a keyboard key to the active element or a CSS-selected element in a preview.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().optional(), key: z.string().min(1) })
+    inputSchema: z.object({ ...sessionField, device: deviceRef, selector: z.string().optional(), key: z.string().min(1) }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false }
   }, async ({ sessionId, ...params }) => textResult(await dispatch('press', params, sessionId)));
 
   server.registerTool('viewport_sweep', {
     description: 'Resize one live preview through common responsive widths and run checks at every width without reloading the page.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef })
+    inputSchema: z.object({ ...sessionField, device: deviceRef }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false }
   }, async ({ sessionId, device }) => textResult(await dispatch('sweep', { device }, sessionId, 120_000)));
 
   server.registerTool('viewport_reload', {
     description: 'Reload one device or all devices. This is an explicit reload action.',
-    inputSchema: z.object({ ...sessionField, device: deviceRef })
+    inputSchema: z.object({ ...sessionField, device: deviceRef }),
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, device }) => textResult(await dispatch('reload', { device }, sessionId)));
 
   server.registerTool('viewport_screenshot', {
@@ -261,7 +277,8 @@ function buildServer() {
       ...sessionField,
       scope: z.enum(['workspace', 'selected', 'device']).default('selected'),
       device: deviceRef
-    })
+    }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
   }, async ({ sessionId, ...params }) => {
     const result = await dispatch('capture', params, sessionId, 60_000);
     if (!result?.ok || !result.base64) return textResult(result);
